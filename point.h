@@ -187,7 +187,7 @@ Point<0>::DataT Point<0>::At(const size_t dimension) const noexcept {
 }
 
 template<>
-std::istream& operator>>(std::istream& _Ostr, Point<0>& val) = delete;
+std::istream& operator>>(std::istream&, Point<0>&) = delete;
 template<>
 std::ostream& operator<<(std::ostream& _Ostr, const Point<0>& val) noexcept {
 	_Ostr << "( )";
