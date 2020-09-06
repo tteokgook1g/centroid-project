@@ -13,6 +13,7 @@
 
 POINT_BEGIN
 
+//CLASS TEMPLATE Point
 template<size_t dimension>
 class Point {
 public:
@@ -29,16 +30,16 @@ public:
 	Point(const std::string& val) noexcept;
 	template<typename _Fwdit>
 	Point(_Fwdit _First, _Fwdit _Last) noexcept;
-	Point(const Point<dimension>&) = default;
-	Point(Point<dimension>&&) = default;
+	Point(const Point&) = default;
+	Point(Point&&) = default;
 	~Point() = default;
 
 	const DataT& At(const size_t dimension) const noexcept;
-	Point<dimension>& Move(const size_t dimension, const DataT& movement) noexcept;
-	Point<dimension>& MoveTo(const size_t dimension, const DataT& destination) noexcept;
+	Point& Move(const size_t dimension, const DataT& movement) noexcept;
+	Point& MoveTo(const size_t dimension, const DataT& destination) noexcept;
 
-	Point<dimension>& operator=(const Point<dimension>&) = default;
-	Point<dimension>& operator=(Point<dimension>&&) = default;
+	Point& operator=(const Point&) = default;
+	Point& operator=(Point&&) = default;
 };
 
 template<size_t dimension>
@@ -157,6 +158,39 @@ bool operator!=(const Point<dimension>& val1, const Point<dimension>& val2) noex
 	return !(val1 == val2);
 }
 
+
+//CLASS TEMPLATE Point SPECIALIZATION
+template<>
+class Point<0> {
+public:
+	static const size_t dim_ = 0;
+	using DataT = real::FixedReal;
+
+	Point() = default;
+	Point(const Point&) = default;
+	Point(Point&&) = default;
+	~Point() = default;
+
+	DataT At(const size_t dimension) const noexcept;
+
+	Point& operator=(const Point&) = default;
+	Point& operator=(Point&&) = default;
+};
+
+Point<0>::DataT Point<0>::At(const size_t dimension) const noexcept {
+	return 0;
+}
+
+std::ostream& operator<<(std::ostream& _Ostr, const Point<0>& val) noexcept {
+	_Ostr << "( )";
+	return _Ostr;
+}
+bool operator==(const Point<0>& val1, const Point<0>& val2) noexcept {
+	return true;
+}
+bool operator!=(const Point<0>& val1, const Point<0>& val2) noexcept {
+	return false;
+}
 
 POINT_END
 
