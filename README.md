@@ -1,6 +1,6 @@
 # centroid-project
-# Ver 2.0.1
+# Ver 2.0.2
 ## This project is about centroid(math)
 ## This project uses tteokgook1g/realnumber-library
 # Major Updates
-## Added class template specialization "Point<0>"
+## Optimization "Point<0>"
