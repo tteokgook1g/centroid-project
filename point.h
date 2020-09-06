@@ -167,12 +167,17 @@ public:
 	using DataT = real::FixedReal;
 
 	Point() = default;
+	Point(const std::initializer_list<DataT>&) = delete;
+	Point(const std::string&) = delete;
+	template<typename _Fwdit>
+	Point(_Fwdit, _Fwdit) = delete;
 	Point(const Point&) = default;
 	Point(Point&&) = default;
 	~Point() = default;
 
 	DataT At(const size_t dimension) const noexcept;
-
+	Point& Move(const size_t, const DataT&) = delete;
+	Point& MoveTo(const size_t, const DataT&) = delete;
 	Point& operator=(const Point&) = default;
 	Point& operator=(Point&&) = default;
 };
@@ -181,13 +186,18 @@ Point<0>::DataT Point<0>::At(const size_t dimension) const noexcept {
 	return 0;
 }
 
+template<>
+std::istream& operator>>(std::istream& _Ostr, Point<0>& val) = delete;
+template<>
 std::ostream& operator<<(std::ostream& _Ostr, const Point<0>& val) noexcept {
 	_Ostr << "( )";
 	return _Ostr;
 }
+template<>
 bool operator==(const Point<0>& val1, const Point<0>& val2) noexcept {
 	return true;
 }
+template<>
 bool operator!=(const Point<0>& val1, const Point<0>& val2) noexcept {
 	return false;
 }
