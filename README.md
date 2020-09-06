@@ -4,3 +4,4 @@
 ## This project uses tteokgook1g/realnumber-library
 # Major Updates
 ## Optimization "Point<0>"
+## Specialization "Polygon<0>"
