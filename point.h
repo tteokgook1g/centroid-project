@@ -24,7 +24,7 @@ private:
 	DataT& operator[](const size_t dimension);
 	const DataT& operator[](const size_t dimension) const noexcept;
 public:
-	Point() noexcept;
+	Point() = default;
 	Point(const std::initializer_list<DataT>& val) noexcept;
 	Point(const std::string& val) noexcept;
 	template<typename _Fwdit>
@@ -57,17 +57,10 @@ const typename Point<dimension>::DataT& Point<dimension>::operator[](const size_
 }
 
 template<size_t dimension>
-Point<dimension>::Point() noexcept {
-	locations_.fill(0);
-}
-template<size_t dimension>
 Point<dimension>::Point(const std::initializer_list<DataT>& val) noexcept {
 	int i = 0;
 	for (auto iter = val.begin();i < dim_ && iter != val.end();i++, iter++) {
 		locations_[i] = *iter;
-	}
-	for (;i != dim_;i++) {
-		locations_[i] = 0;
 	}
 }
 template<size_t dimension>
@@ -86,18 +79,12 @@ Point<dimension>::Point(const std::string& val) noexcept {
 		}
 		_val.erase(0, _val.find(',') + 1);
 	}
-	for (;i < dim_;i++) {
-		locations_[i] = 0;
-	}
 }
 template<size_t dimension> template<typename _Fwdit>
 Point<dimension>::Point(_Fwdit _First, _Fwdit _Last) noexcept {
 	int i = 0;
 	for (_Fwdit iter = _First;i < dim_ && iter != _Last;i++, iter++) {
 		locations_[i] = *iter;
-	}
-	for (;i != dim_;i++) {
-		locations_[i] = 0;
 	}
 }
 
