@@ -3,5 +3,5 @@
 ## This project is about centroid(math)
 ## This project uses tteokgook1g/realnumber-library
 # Major Updates
-## Changed real::operator-(const FixedReal&,const FixedReal&)
-## Added class template "Point"
+## Optimization : class Point constructor
+## Added class template "Polygon"
