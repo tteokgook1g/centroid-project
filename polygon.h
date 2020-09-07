@@ -225,7 +225,104 @@ std::ostream& operator<<(std::ostream& _Ostr, const Polygon<0>& val) noexcept {
 	return _Ostr;
 }
 
+//CLASS TEMPLATE Polygon SPECIALIZATION
+template<>
+class Polygon<1> {
+public:
+	using DataT = point::Point<2>;
+	static const size_t dim_ = 2;
+	static const size_t ngon_ = 1;
+private:
+	DataT point_;
+public:
+	Polygon() = default;
+	Polygon(const std::initializer_list<DataT>) = delete;
+	Polygon(const std::string& val) noexcept;
+	template<typename _Fwdit>
+	Polygon(_Fwdit, _Fwdit) = delete;
+	Polygon(const Polygon&) = default;
+	Polygon(Polygon&&) = default;
+	~Polygon() = default;
 
+	Polygon& operator=(const Polygon&) = default;
+	Polygon& operator=(Polygon&&) = default;
+
+	const DataT& At(const size_t index) const noexcept;
+	real::FixedReal Area() const noexcept;
+	std::array < Polygon<3>, Subtract<1, 2>::value > Split() const = delete;
+	DataT Centroid() const noexcept;
+};
+
+const Polygon<1>::DataT& Polygon<1>::At(const size_t index) const noexcept {
+	if (index == 0) return point_;
+	else return DataT();
+}
+real::FixedReal Polygon<1>::Area() const noexcept {
+	return 0;
+}
+Polygon<1>::DataT Polygon<1>::Centroid() const noexcept {
+	return point_;
+}
+template<>
+bool operator==(const Polygon<1>& val1, const Polygon<1>& val2) noexcept {
+	if (val1.At(0) == val2.At(0)) return true;
+	else return false;
+}
+template<>
+bool operator!=(const Polygon<1>& val1, const Polygon<1>& val2) noexcept {
+	if (val1.At(0) != val2.At(0)) return true;
+	else return false;
+}
+template<>
+std::istream& operator>>(std::istream& _Istr, Polygon<1>& val) {
+	std::string input;
+	_Istr >> input;
+	val = Polygon<1>(input);
+	return _Istr;
+}
+template<>
+std::ostream& operator<<(std::ostream& _Ostr, const Polygon<1>& val) noexcept {
+	_Ostr << val.At(0);
+	return _Ostr;
+}
+
+//CLASS TEMPLATE Polygon SPECIALIZATION
+template<>
+class Polygon<2> {
+public:
+	using DataT = point::Point<2>;
+	static const size_t dim_ = 2;
+	static const size_t ngon_ = 2;
+private:
+	std::array<DataT, 2> points_;
+public:
+	Polygon() = default;
+	Polygon(const std::initializer_list<DataT> val) noexcept;
+	Polygon(const std::string& val) noexcept;
+	template<typename _Fwdit>
+	Polygon(_Fwdit _First, _Fwdit _Last) noexcept;
+	Polygon(const Polygon&) = default;
+	Polygon(Polygon&&) = default;
+	~Polygon() = default;
+
+	Polygon& operator=(const Polygon&) = default;
+	Polygon& operator=(Polygon&&) = default;
+
+	const DataT& At(const size_t index) const noexcept;
+	real::FixedReal Area() const noexcept;
+	std::array < Polygon<3>, Subtract<2, 2>::value > Split() const = delete;
+	DataT Centroid() const noexcept;
+};
+
+real::FixedReal Polygon<2>::Area() const noexcept {
+	return 0;
+}
+Polygon<1>::DataT Polygon<2>::Centroid() const noexcept {
+	DataT answer;
+	answer.MoveTo(0, (points_.at(0).At(0) + points_.at(1).At(0)) / 2);
+	answer.MoveTo(1, (points_.at(0).At(1) + points_.at(1).At(1)) / 2);
+	return answer;
+}
 
 
 POLYGON_END
