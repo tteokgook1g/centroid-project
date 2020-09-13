@@ -5,7 +5,7 @@
 #define CENTROID_PROJECT_POLYGON_H_
 
 #pragma warning(push)
-#pragma warning(disable:4172)
+#pragma warning(disable:4172 26454)
 
 #include "realnumber.h"
 #include "point.h"
