@@ -5,7 +5,7 @@
 #define CENTROID_PROJECT_POLYGON_H_
 
 #pragma warning(push)
-#pragma warning(disable:4172)
+#pragma warning(disable:4172 26454)
 
 #include "realnumber.h"
 #include "point.h"
@@ -253,6 +253,10 @@ public:
 	DataT Centroid() const noexcept;
 };
 
+Polygon<1>::Polygon(const std::string& val) noexcept {
+	point_ = val;
+}
+
 const Polygon<1>::DataT& Polygon<1>::At(const size_t index) const noexcept {
 	if (index == 0) return point_;
 	else return DataT();
@@ -314,10 +318,36 @@ public:
 	DataT Centroid() const noexcept;
 };
 
+Polygon<2>::Polygon(const std::initializer_list<DataT> val) noexcept {
+	int i = 0;
+	for (auto iter = val.begin();i < 2 && iter != val.end();i++, iter++) {
+		points_[i] = *iter;
+	}
+}
+Polygon<2>::Polygon(const std::string& val) noexcept {
+	std::string _val(val);
+	_val.erase(0, _val.find('('));
+	for (int i = 0;i < 2;i++) {
+		points_[i] = _val.substr(_val.find('(') + 1, _val.find(')') - _val.find('(') - 1);
+		if (_val.find(')') == _val.npos) {
+			++i;
+			break;
+		}
+		_val.erase(0, _val.find(')') + 1);
+	}
+}
+template<typename _Fwdit>
+Polygon<2>::Polygon(_Fwdit _First, _Fwdit _Last) noexcept {
+	int i = 0;
+	for (_Fwdit iter = _First;i < 2 && iter != _Last;i++, iter++) {
+		points_[i] = *iter;
+	}
+}
+
 real::FixedReal Polygon<2>::Area() const noexcept {
 	return 0;
 }
-Polygon<1>::DataT Polygon<2>::Centroid() const noexcept {
+Polygon<2>::DataT Polygon<2>::Centroid() const noexcept {
 	DataT answer;
 	answer.MoveTo(0, (points_.at(0).At(0) + points_.at(1).At(0)) / 2);
 	answer.MoveTo(1, (points_.at(0).At(1) + points_.at(1).At(1)) / 2);
